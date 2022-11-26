@@ -3,8 +3,10 @@
 
 #include <list>
 #include <memory>
+#include "GraphicOutput.h"
 
 #include "GraphicElement.h"
+#include "snakeElement.h"
 #include "RingBuffer.h"
 enum Direction
 {
@@ -14,12 +16,16 @@ enum Direction
 class SnakeGame
 {
     private:
+        std::shared_ptr<GraphicOutput> graphicOutput;
         uint32_t u32TickRate = 1;
-        std::list<std::unique_ptr<GraphicElement>> vGraphicElements;
+        std::list<std::shared_ptr<GraphicElement>> lGraphicElements;
         RingBuffer keyboardInputs;
-        void addKeyboardInput(enum Direction eDirection);
+        void drawSnake();
+        void moveSnake();
+        void initialize();
 
-    public: 
+    public:
+        void addKeyboardInput(enum Direction eDirection); 
         SnakeGame(uint32_t u32TickRate);
         void tick();
         uint32_t getTickRate();

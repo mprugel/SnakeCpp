@@ -1,10 +1,29 @@
 #include "SnakeGame.h"
 
+void SnakeGame::drawSnake()
+{
+
+}
+
+void SnakeGame::moveSnake()
+{
+
+}
+
+void SnakeGame::initialize()
+{
+    // Create Basic Snake:
+    for(uint32_t i = 0; i < 5; i++)
+    {
+        std::shared_ptr<SnakeElement> ptr = std::shared_ptr<SnakeElement>( new SnakeElement(i,10,this->graphicOutput));
+        this->lGraphicElements.push_back(ptr);
+    }
+}
 
 void SnakeGame::tick()
 {
     // Add new Element to List:
-    
+
 }
 
 void SnakeGame::addKeyboardInput(enum Direction eDirection)

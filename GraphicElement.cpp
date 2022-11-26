@@ -1,6 +1,7 @@
 #include "GraphicElement.h"
 
-GraphicElement::GraphicElement(uint32_t xPos, uint32_t yPos) : xPos(xPos), yPos(yPos)
+GraphicElement::GraphicElement(uint32_t xPos, uint32_t yPos,std::shared_ptr<GraphicOutput> graphicOutput)
+ : xPos(xPos), yPos(yPos), graphicOutput(graphicOutput)
 {
 
 }

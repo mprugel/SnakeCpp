@@ -51,7 +51,7 @@ int main()
     // Terminate curses mode:
     endwin();
     std::cout << "Left Game" << std::endl;
-    tickThread.join();
+    tickThread.detach();
 
     
     return 0;

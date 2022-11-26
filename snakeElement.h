@@ -4,7 +4,9 @@
 
 class SnakeElement : public GraphicElement
 {
-    
+    public:
+    SnakeElement(uint32_t xPos, uint32_t yPos,std::shared_ptr<GraphicOutput> graphicOutput);
+    virtual void draw();
 };
 
 #endif
