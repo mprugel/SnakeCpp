@@ -1,2 +1,5 @@
-snake: main.cpp SnakeGame.cpp GraphicElement.cpp snakeElement.cpp RingBuffer.cpp GraphicOutput.cpp
-	g++ main.cpp SnakeGame.cpp GraphicElement.cpp snakeElement.cpp RingBuffer.cpp -std=c++11 -lncurses -o snake -lpthread
+SRC= $(wildcard Private/*.cpp)
+INC= -I./Public/
+
+snake: $(SRC)
+	g++ $(SRC) $(INC) -std=c++11 -lncurses -o snake -lpthread

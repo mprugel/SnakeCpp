@@ -3,34 +3,44 @@
 
 #include <list>
 #include <memory>
-#include "GraphicOutput.h"
+#include <cstdlib>
+#include <ctime>
+#include "IOutput.h"
 
 #include "GraphicElement.h"
 #include "snakeElement.h"
 #include "RingBuffer.h"
+
+
+
 enum Direction
 {
-    RIGHT, LEFT, UP, DOWN
+    RIGHT=0, LEFT, UP, DOWN
 };
+
+#define INITIAL_LENGTH 10
 
 class SnakeGame
 {
     private:
-        std::shared_ptr<GraphicOutput> graphicOutput;
+        std::shared_ptr<IOutput> output;
         uint32_t u32TickRate = 1;
         std::list<std::shared_ptr<GraphicElement>> lGraphicElements;
+        std::shared_ptr<GraphicElement> gFood;
         RingBuffer keyboardInputs;
         void drawSnake();
-        void moveSnake();
+        void moveSnake(Direction eDirection);
         void initialize();
+        void createFood();
+        bool detectCollision();
+        uint32_t u32GameWidth = 30U;
+        uint32_t u32GameHeight = 30U;
 
     public:
         void addKeyboardInput(enum Direction eDirection); 
-        SnakeGame(uint32_t u32TickRate);
-        void tick();
+        SnakeGame(uint32_t u32TickRate, std::shared_ptr<IOutput> output);
+        bool tick();
         uint32_t getTickRate();
-
-
         
 };
 

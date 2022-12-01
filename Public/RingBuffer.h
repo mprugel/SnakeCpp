@@ -6,7 +6,11 @@
 #define BUFFER_SIZE 16
 #define BUFFER_MASK (BUFFER_SIZE - 1U)
 
-
+enum ReturnCode
+{
+    OK = 0,
+    EMPTY
+};
 
 class RingBuffer
 {
@@ -14,11 +18,12 @@ class RingBuffer
         uint32_t u32Buffer[BUFFER_SIZE];
         uint32_t u32ReadPos = 0U;
         uint32_t u32WritePos = 0U;
+        uint32_t u32ElementCount = 0U;
         std::mutex mtx;
         
     public:
-        void write(uint32_t& u32Val);
-        uint32_t read();
+        void write(const uint32_t& u32Val);
+        enum ReturnCode read(uint32_t& u32Val);
 
 
 };
