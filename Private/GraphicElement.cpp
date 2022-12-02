@@ -1,23 +1,19 @@
 #include "GraphicElement.h"
 
-GraphicElement::GraphicElement(uint32_t xPos, uint32_t yPos,std::shared_ptr<IOutput> output)
- : xPos(xPos), yPos(yPos), output(output)
+GraphicElement::GraphicElement(sPosition sPos,std::shared_ptr<IOutput> output)
+ : sPos(sPos), output(output)
 {
 
 }
 
-void GraphicElement::setPosition(uint32_t xPos, uint32_t yPos)
+void GraphicElement::setPosition(sPosition sPos)
 {
-    this->xPos = xPos;
-    this->yPos = yPos;
+    this->sPos = sPos;
 }
 
-uint32_t GraphicElement::getX()
+sPosition GraphicElement::getPosition()
 {
-    return this->xPos;
+    return this->sPos;
 }
-uint32_t GraphicElement::getY()
-{
-    return this->yPos;
-}
+
 

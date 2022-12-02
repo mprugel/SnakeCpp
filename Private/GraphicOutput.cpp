@@ -1,8 +1,7 @@
 #include "GraphicOutput.h"
 
 
-GraphicOutput::GraphicOutput(uint32_t u32Width, uint32_t u32Height) :
-u32WindowWidth(u32Width), u32WindowHeight(u32Height)
+void GraphicOutput::initialize(uint32_t u32Width, uint32_t u32Height)
 {
     initscr(); 
     cbreak(); 
@@ -28,6 +27,7 @@ u32WindowWidth(u32Width), u32WindowHeight(u32Height)
     //drawPoint(2,2);
     wrefresh(win);
 }
+
 
 void GraphicOutput::drawRect(uint32_t u32xPos, uint32_t u32yPos, uint32_t u32Width, uint32_t u32Height)
 {

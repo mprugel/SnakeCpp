@@ -12,6 +12,7 @@ class IOutput
         virtual void clear() = 0;
         virtual void drawText(uint32_t u32x, uint32_t u32y,std::string text) = 0;
         virtual void update() = 0;
+        virtual void initialize(uint32_t u32Width, uint32_t u32Height) = 0;
 
 };
 

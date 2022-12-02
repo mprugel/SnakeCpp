@@ -54,8 +54,8 @@ void threadGameTick(SnakeGame& game)
 
 int main()
 {
-    std::shared_ptr<IOutput> output(new GraphicOutput(100U,30U));
-    SnakeGame game(8, output);
+    std::shared_ptr<IOutput> output(new GraphicOutput());
+    SnakeGame game(8,50,20, output);
     std::thread tickThread(threadGameTick,std::ref(game));
     std::thread keyboardThread(threadKeyboardListener,std::ref(game));
 

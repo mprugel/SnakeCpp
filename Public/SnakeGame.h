@@ -33,12 +33,14 @@ class SnakeGame
         void initialize();
         void createFood();
         bool detectCollision();
+        bool isPosInSnake(sPosition sPos);
+
         uint32_t u32GameWidth = 30U;
         uint32_t u32GameHeight = 30U;
 
     public:
         void addKeyboardInput(enum Direction eDirection); 
-        SnakeGame(uint32_t u32TickRate, std::shared_ptr<IOutput> output);
+        SnakeGame(uint32_t u32TickRate, uint32_t u32Width, uint32_t u32Height, std::shared_ptr<IOutput> output);
         bool tick();
         uint32_t getTickRate();
         

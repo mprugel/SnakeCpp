@@ -13,13 +13,14 @@ class GraphicOutput : public IOutput
         // ncurses Window:
         WINDOW* win; 
     public:
-        GraphicOutput(uint32_t u32Width, uint32_t u32Height);
         void drawRect(uint32_t u32xPos, uint32_t u32yPos, uint32_t u32Width, uint32_t u32Height);
         void drawLine(uint32_t u32x1, uint32_t u32y1, uint32_t u32x2, uint32_t u32y2);
         void drawPoint(uint32_t u32xPos, uint32_t u32yPos);
         virtual void clear();
         virtual void update();
         virtual void drawText(uint32_t u32x, uint32_t u32y,std::string text);
+        virtual void initialize(uint32_t u32Width, uint32_t u32Height);
+
 
 
 

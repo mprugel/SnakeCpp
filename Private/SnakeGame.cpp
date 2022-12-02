@@ -13,33 +13,32 @@ void SnakeGame::drawSnake()
 
 void SnakeGame::moveSnake(Direction eDirection)
 {
-    uint32_t u32x, u32y;
+    sPosition sPos = {0,0};   
     auto it = this->lGraphicElements.end();
     it--;
     auto head = *it;
    
-    u32x = head->getX(); 
-    u32y = head->getY(); 
+    sPos = head->getPosition();
 
     switch (eDirection)
     {
         case Direction::DOWN :
-            u32y++;
+            sPos.y++;
             break;
          case Direction::UP :
-            u32y--;
+            sPos.y--;
             break;
          case Direction::RIGHT :
-            u32x++;
+            sPos.x++;
             break;
          case Direction::LEFT :
-            u32x--;
+            sPos.x--;
             break;
     }
 
-    auto newHead = std::shared_ptr<SnakeElement>(new SnakeElement(u32x,u32y,this->output));
+    auto newHead = std::shared_ptr<SnakeElement>(new SnakeElement(sPos,this->output));
 
-    if(head->getX() == this->gFood->getX() && head->getY() == this->gFood->getY())
+    if(head->getPosition() == this->gFood->getPosition())
     {
         this->createFood();
     }
@@ -53,14 +52,17 @@ void SnakeGame::moveSnake(Direction eDirection)
 
 void SnakeGame::initialize()
 {
+    // initialze Graphic Output:
+    this->output->initialize(this->u32GameWidth, this->u32GameHeight);
+
     // Create Basic Snake:
-    for(uint32_t i = 0; i < INITIAL_LENGTH; i++)
+    for(int32_t i = 0; i < INITIAL_LENGTH; i++)
     {
-        std::shared_ptr<SnakeElement> ptr = std::shared_ptr<SnakeElement>( new SnakeElement(i + 5,10,this->output));
+        std::shared_ptr<SnakeElement> ptr = std::shared_ptr<SnakeElement>( new SnakeElement({i + 5,10},this->output));
         this->lGraphicElements.push_back(ptr);
     }
     // Create the Food Object:
-    this->gFood = std::shared_ptr<SnakeElement>(new SnakeElement(0,0, this->output));
+    this->gFood = std::shared_ptr<SnakeElement>(new SnakeElement({0,0}, this->output));
     this->createFood();
 
     drawSnake();
@@ -70,10 +72,15 @@ void SnakeGame::createFood()
 {
     // Create the Food randomly;
     std::srand(std::time(nullptr));
-    uint32_t u32x = (std::rand() % (this->u32GameWidth - 10U)) + 5U;
-    uint32_t u32y = (std::rand() % (this->u32GameHeight - 10U)) + 5U;
-    
-    this->gFood->setPosition(u32x,u32y);
+    sPosition sPos{-1,-1};
+    do 
+    {
+        sPos.x = (std::rand() % (this->u32GameWidth - 10U)) + 5U;
+        sPos.y = (std::rand() % (this->u32GameHeight - 10U)) + 5U;
+    }
+    while(isPosInSnake(sPos));
+   
+    this->gFood->setPosition(sPos);
     
 }
 
@@ -121,6 +128,18 @@ bool SnakeGame::tick()
 
 }
 
+bool SnakeGame::isPosInSnake(sPosition sPos)
+{
+    for(auto el : this->lGraphicElements)
+    {
+        if(el->getPosition() == sPos)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool SnakeGame::detectCollision()
 {
     auto head = this->lGraphicElements.back();
@@ -128,10 +147,15 @@ bool SnakeGame::detectCollision()
     end--;
     for(auto it = this->lGraphicElements.begin(); it != end; it++)
     {
-        if((*it)->getX() == head->getX() && (*it)->getY() == head->getY())
+        if((*it)->getPosition() == head->getPosition())
         {
             return true;
         }
+    }
+    sPosition headPos = head->getPosition();
+    if(headPos.x < 0 || headPos.y < 0 || headPos.y >= this->u32GameHeight || headPos.x >= u32GameWidth)
+    {
+        return true;
     }
     return false;
 }
@@ -142,8 +166,8 @@ void SnakeGame::addKeyboardInput(enum Direction eDirection)
     this->keyboardInputs.write((uint32_t&)eDirection);
 }
 
-SnakeGame::SnakeGame(uint32_t u32TickRate, std::shared_ptr<IOutput> output)
- : u32TickRate(u32TickRate), output(output)
+SnakeGame::SnakeGame(uint32_t u32TickRate, uint32_t u32Width, uint32_t u32Height, std::shared_ptr<IOutput> output)
+ : u32TickRate(u32TickRate), output(output), u32GameWidth(u32Width), u32GameHeight(u32Height)
 {
     this->initialize();
 }
