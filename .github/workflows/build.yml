@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: mkdir build
+      - run: cd build
+      - run: cmake ..
       - run: make snake
       - run: make test
       - run: ./test
