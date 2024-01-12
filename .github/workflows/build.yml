@@ -6,13 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: ls
       - run: mkdir build
-      - run: cd build
-      - run: cmake ../CMakeLists.txt
-      - run: make snake
-      - run: make test
-      - run: ./test
+      - name: "build"
+        working-directory: build
+        run: | 
+          cmake ../CMakeLists.txt
+          make snake
+          make test
+          ./test
 
 
 
